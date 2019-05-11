@@ -1,0 +1,74 @@
+@import './variables';
+
+.modal {    // MODAL BG
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+
+  &.opened {
+    display: block;
+  }
+
+  .modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    max-width: 600px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+
+    .modal-header {
+      padding: 2px 16px;
+      color: black;
+      border-bottom: 1px solid darken($body-bg-color, 10%);
+
+      h3 {
+        margin: 10px 15px 10px 0px;
+      }
+
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        color: #cecece;
+        float: right;
+        font-size: 20px;
+        font-weight: bold;
+
+        &:hover,
+        &:focus {
+          color: darken(#cecece, 30%);
+          text-decoration: none;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .modal-body {
+      padding: 2px 16px;
+    }
+
+    .modal-footer {
+      padding: 18px 14px;
+      color: black;
+      border-top: 1px solid  darken($body-bg-color, 10%);
+      background-color: lighten($body-bg-color, 2%);
+    }
+  }
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
