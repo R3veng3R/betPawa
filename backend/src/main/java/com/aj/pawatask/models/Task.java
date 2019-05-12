@@ -7,12 +7,16 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@Table(name="tasks")
+@Table(name = Task.TABLE_NAME)
 public class Task extends AbstractModel {
+
+    public static final String TABLE_NAME = "tasks";
+
     @Column(name="title")
     private String title;
 
@@ -32,4 +36,7 @@ public class Task extends AbstractModel {
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)
     private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "taskId")
+    private List<Comment> comments;
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -28,5 +29,17 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task saveTask(Task task) {
         return taskRepository.save(task);
+    }
+
+    @Override
+    public Task delete(Task task) {
+        taskRepository.deleteById(task.getId());
+        return task;
+    }
+
+    @Override
+    public Task getById(Long id) {
+        Optional<Task> task = taskRepository.findById(id);
+        return task.orElse(null);
     }
 }
