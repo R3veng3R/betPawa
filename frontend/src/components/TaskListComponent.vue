@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex';
+    import {mapActions, mapGetters} from 'vuex';
     import {SET_TASK_LIST} from "@/store/modules/task/mutation-types";
     import TaskItemComponent from "@/components/TaskItemComponent";
     import {FORM_TYPE_EDIT, FORM_TYPE_READ} from "@/util/constants";
@@ -35,6 +35,10 @@
                 taskList: 'getTaskList',
                 isEmptyList: 'isEmptyTaskList'
             })
+        },
+
+        beforeMount() {
+            this.getTasks();
         },
 
         data() {
@@ -87,7 +91,7 @@
                 console.log('delete', id);
             },
 
-            ...mapActions(['openForm', 'setFormType', 'setFormItem'])
+            ...mapActions(['openForm', 'setFormType', 'setFormItem', 'getTasks'])
         }
     }
 </script>

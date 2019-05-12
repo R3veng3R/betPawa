@@ -3,7 +3,7 @@
         <p class="item-title">{{item.title}}</p>
 
         <div class="item-date">
-            <i class="far fa-calendar-alt"><span>{{item.todoDate}}</span></i>
+            <i class="far fa-calendar-alt"><span>{{item.dueDate}}</span></i>
         </div>
 
         <div class="item-controls">
