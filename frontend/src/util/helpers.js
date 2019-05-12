@@ -1,7 +1,6 @@
 /**
- * Create instant, which represent error object
+ * Represents server error object
  * @param {Object} [error] - axios error object
- * @param {String} [message] - custom message to display
  */
 export class ErrorWrapper {
     constructor (error) {
