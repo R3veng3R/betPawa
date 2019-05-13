@@ -30,4 +30,7 @@ public class Comment extends AbstractModel {
 
     @Column(name="task_id")
     private Long taskId;
+
+    @Column(name="user_id")
+    private Long userId;
 }

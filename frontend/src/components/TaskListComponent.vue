@@ -1,7 +1,7 @@
 <template>
     <div class="task-list-wrapper">
         <div class="header-block list-block flex-row">
-            <div class="header">{{headerString}}</div>
+            <div class="header">{{headerString}}: {{ getUserName() }}</div> <!-- TODO: FIX MOBILE VIEW  (320 x 600) -->
             <a class="button" @click.prevent="addTask">{{addTaskString}}</a>
         </div>
 
@@ -22,9 +22,8 @@
 
 <script>
     import {mapActions, mapGetters} from 'vuex';
-    import {SET_TASK_LIST} from "@/store/modules/task/mutation-types";
     import TaskItemComponent from "@/components/TaskItemComponent";
-    import {FORM_TYPE_EDIT, FORM_TYPE_READ} from "@/util/constants";
+    import {DEFAULT_TASK_OBJ, FORM_TYPE_CREATE, FORM_TYPE_EDIT, FORM_TYPE_READ} from "@/util/constants";
 
     export default {
         name: "TaskListComponent",
@@ -33,7 +32,8 @@
         computed: {
             ...mapGetters({
                 taskList: 'getTaskList',
-                isEmptyList: 'isEmptyTaskList'
+                isEmptyList: 'isEmptyTaskList',
+                user: 'getUser'
             })
         },
 
@@ -43,34 +43,17 @@
 
         data() {
             return {
-                headerString: 'PawaTasks:',
+                headerString: 'PawaTasks',
                 emptyListString: 'You do not have any tasks:',
-                addTaskString: 'Add new task',
+                addTaskString: 'Add a new task',
             }
         },
 
         methods: {
             addTask() {
-                let payload = {
-                    taskList: [
-                        {
-                            id: 1,
-                            title: 'Test me',
-                            description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ' +
-                                'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, ' +
-                                'when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                            todoDate: '12/12/12',
-                            priority: 'LOW',
-                            comments: []
-                        }
-                    ]
-                };
-
-                if (!this.isEmptyList) {
-                    this.$store.commit(SET_TASK_LIST, {taskList: []});
-                } else {
-                    this.$store.commit(SET_TASK_LIST, payload);
-                }
+                this.setFormType(FORM_TYPE_CREATE);
+                this.setFormItem(DEFAULT_TASK_OBJ);
+                this.openForm();
             },
 
             onComment(item) {
@@ -84,14 +67,19 @@
                 this.setFormType(FORM_TYPE_EDIT);
                 this.setFormItem(item);
                 this.openForm();
+
                 console.log('edit obj: ', item);
             },
 
-            onDelete(id) {
-                console.log('delete', id);
+            onDelete(id) {  // TODO: create confirm box
+                this.deleteTask(id);
             },
 
-            ...mapActions(['openForm', 'setFormType', 'setFormItem', 'getTasks'])
+            getUserName() {
+                return this.user.name + ' ' + this.user.lastName.charAt(0).toUpperCase() + '.';
+            },
+
+            ...mapActions(['openForm', 'setFormType', 'setFormItem', 'getTasks', 'deleteTask'])
         }
     }
 </script>
@@ -107,6 +95,12 @@
         padding-right: 15px;
         padding-left: 15px;
         border-radius: 5px;
+
+        .header-block {
+            .header {
+                @extend %text-ellipsis;
+            }
+        }
 
         .list-block {
             height: 50px;

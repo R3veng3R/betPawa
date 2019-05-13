@@ -9,5 +9,7 @@ export default {
 
     getFormOpenStatus: (state) => {
         return state.isOpened;
-    }
+    },
+
+    isLoading: (state) => {return state.isLoading}
 }

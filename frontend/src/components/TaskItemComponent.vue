@@ -3,7 +3,7 @@
         <p class="item-title">{{item.title}}</p>
 
         <div class="item-date">
-            <i class="far fa-calendar-alt"><span>{{item.dueDate}}</span></i>
+            <i class="far fa-calendar-alt"><span>{{ localeDate }}</span></i>
         </div>
 
         <div class="item-controls">
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+    import {DATE_FORMAT} from "@/util/constants";
+
     export default {
         name: "TaskItemComponent",
 
@@ -30,6 +32,12 @@
             item: {
                 type: Object,
                 required: true
+            }
+        },
+
+        computed: {
+            localeDate() {
+                return this.$moment(this.item.dueDate).local().format(DATE_FORMAT);
             }
         },
 
@@ -54,6 +62,7 @@
 
     .list-item {
         .item-title {
+            @extend %text-ellipsis;
             font-size: 15px;
         }
 

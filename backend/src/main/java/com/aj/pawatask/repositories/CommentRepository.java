@@ -8,4 +8,5 @@ import java.util.List;
 public interface CommentRepository extends BaseRepository<Comment, Long> {
 
     List<Comment> findByTaskId(@NotNull Long taskId);
+    List<Comment> findByUserId(@NotNull Long userId);
 }

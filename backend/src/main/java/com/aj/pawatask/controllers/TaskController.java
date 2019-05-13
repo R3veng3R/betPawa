@@ -2,9 +2,7 @@ package com.aj.pawatask.controllers;
 
 import com.aj.pawatask.models.Task;
 import com.aj.pawatask.services.impl.TaskServiceImpl;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,4 +20,16 @@ public class TaskController {
     public List<Task> getTaskList() {
         return taskService.getTaskList();
     }
+
+
+    @PostMapping()
+    public void createTask(@RequestBody Task task) {
+        taskService.saveTask(task);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        taskService.deleteById(id);
+    }
+
 }

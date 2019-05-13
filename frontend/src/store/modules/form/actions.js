@@ -1,4 +1,4 @@
-import {SET_FORM_TYPE, SET_ITEM, TOGGLE_FORM} from "@/store/modules/form/mutation-types";
+import {SET_FORM_TYPE, SET_ITEM, SET_LOADING, TOGGLE_FORM} from "@/store/modules/form/mutation-types";
 
 export default {
     openForm({commit}) {
@@ -15,5 +15,9 @@ export default {
 
     setFormItem({commit}, item) {
         commit(SET_ITEM, {item: item})
+    },
+
+    setLoading({commit}, status) {
+        commit(SET_LOADING, status);
     }
 }
