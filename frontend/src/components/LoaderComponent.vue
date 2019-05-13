@@ -1,11 +1,11 @@
 <template>
     <div class="loader-overlay" v-if="isLoading">
         <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
             <p>Loading...</p>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
         </div>
     </div>
 </template>
