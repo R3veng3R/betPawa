@@ -20,7 +20,7 @@ public class Comment extends AbstractModel {
     private String userName;
 
     @Column(name="user_lastname")
-    private String userLastName;
+    private String userLastname;
 
     @Column(name="comment")
     private String comment;
