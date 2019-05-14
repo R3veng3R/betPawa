@@ -5,7 +5,7 @@
             <!-- EDIT FORM -->
             <modal-component v-if="isEdit || isCreate" @modalClosed="closeForm">
                 <template slot="header">
-                    < {{ taskItem.title }} >
+                     {{ taskItem.title }}
                 </template>
 
                 <template slot="body">
@@ -102,14 +102,14 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex';
+    import {mapActions, mapGetters} from 'vuex';
     import {
+        DATE_FORMAT,
+        DB_DATE_FORMAT,
         FORM_PRIORITY_LIST,
         FORM_TYPE_CREATE,
         FORM_TYPE_EDIT,
-        FORM_TYPE_READ,
-        DATE_FORMAT,
-        DB_DATE_FORMAT
+        FORM_TYPE_READ
     } from "@/util/constants";
     import ModalComponent from "@/components/ModalComponent";
     import {SET_TASK_COMMENTS} from "@/store/modules/form/mutation-types";
