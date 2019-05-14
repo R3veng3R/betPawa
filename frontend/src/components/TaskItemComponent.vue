@@ -1,12 +1,14 @@
 <template>
-    <div class="list-block list-item flex-row">
-        <p class="item-title">{{item.title}}</p>
+    <div class="list-block list-item css-row">
+        <div class="css-column">
+            <p class="item-title">{{item.title}}</p>
+        </div>
 
-        <div class="item-date">
+        <div class="item-date css-column align-right">
             <i class="far fa-calendar-alt"><span>{{ localeDate }}</span></i>
         </div>
 
-        <div class="item-controls">
+        <div class="item-controls css-column align-right">
             <a class="button item-btn comment-btn" @click.prevent="onCommentClick">
                 <i class="far fa-comment-dots"></i>
             </a>
@@ -60,6 +62,8 @@
 <style scoped lang="scss">
     @import '../scss/variables';
 
+    $control-btn-number: 3;
+
     .list-item {
         .item-title {
             @extend %text-ellipsis;
@@ -75,6 +79,8 @@
         }
 
         .item-controls {
+            width: calc(35px * #{$control-btn-number});
+
             .item-btn {
                 width: 25px;
                 height: 25px;

@@ -36,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
             return Collections.emptyList();
         }
 
-        return commentRepository.findByTaskId(taskId);
+        return commentRepository.findByTaskIdOrderByCreateDateAsc(taskId);
     }
 
 

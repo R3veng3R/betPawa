@@ -9,7 +9,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/task")
 public class TaskController {
-
     private TaskServiceImpl taskService;
 
     public TaskController(TaskServiceImpl taskService) {

@@ -1,4 +1,10 @@
-import {SET_FORM_TYPE, SET_ITEM, SET_LOADING, TOGGLE_FORM} from "@/store/modules/form/mutation-types";
+import {
+    SET_FORM_TYPE,
+    SET_ITEM,
+    SET_LOADING,
+    SET_TASK_COMMENTS,
+    TOGGLE_FORM
+} from "@/store/modules/form/mutation-types";
 import CommentService from '@/services/comment.service';
 
 export default {
@@ -22,9 +28,17 @@ export default {
         commit(SET_LOADING, status);
     },
 
-    addComment({commit}, comment) {
+    addComment({dispatch, commit}, comment) {
         return CommentService.addComment(comment)
-            .then(response => console.log('Comment added!'))
+            .then(data => {
+                dispatch('getTaskComments', data.id);
+            })
+            .catch(error => console.warn(error.message))
+    },
+
+    getTaskComments({ commit }, taskId) {
+        return CommentService.getTaskCommentsByTaskId(taskId)
+            .then(data => commit(SET_TASK_COMMENTS, data ))
             .catch(error => console.warn(error.message))
     }
 }

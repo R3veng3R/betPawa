@@ -47,3 +47,17 @@ input::placeholder {
   align-items: center;
   justify-content: space-between;
 }
+
+.css-row {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 0;
+}
+.css-column {
+  display: table-cell;
+
+  &.align-right {
+    text-align: right;
+  }
+}
