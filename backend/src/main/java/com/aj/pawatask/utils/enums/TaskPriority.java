@@ -1,11 +1,9 @@
 package com.aj.pawatask.utils.enums;
 
-import com.aj.pawatask.utils.Constants;
-
 public enum TaskPriority {
-    LOW(Constants.TASK_PRIORITY_LOW),
-    MEDIUM(Constants.TASK_PRIORITY_MEDIUM),
-    HIGH(Constants.TASK_PRIORITY_HIGH);
+    LOW("LOW"),
+    MEDIUM("MEDIUM"),
+    HIGH("HIGH");
 
     private final String text;
 
