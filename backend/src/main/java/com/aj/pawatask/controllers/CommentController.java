@@ -2,10 +2,7 @@ package com.aj.pawatask.controllers;
 
 import com.aj.pawatask.models.Comment;
 import com.aj.pawatask.services.impl.CommentServiceImpl;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +19,10 @@ public class CommentController {
     @GetMapping("/{id}")
     public List<Comment> getTaskComments(@PathVariable Long id) {
         return commentService.getTaskComments(id);
+    }
+
+    @PostMapping("")
+    public void addComment(@RequestBody Comment comment) {
+        commentService.saveComment(comment);
     }
 }

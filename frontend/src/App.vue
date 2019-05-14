@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <task-list-component/>
-        <form-component/>
+        <task-list-component />
+        <form-component />
         <loader-component />
     </div>
 </template>
@@ -26,7 +26,7 @@
 
                 if (!user) {
                     user = {
-                        id: 11,
+                        id: 1,
                         name: 'Aleksei',
                         lastName: "Jermatsenkov"
                     }

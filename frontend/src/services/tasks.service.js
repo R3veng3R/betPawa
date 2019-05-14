@@ -3,6 +3,7 @@ import BaseService from "@/services/base.service";
 
 const TASK_LIST_API = '/api/task/list';
 const TASK_API = '/api/task';
+
 class TasksService extends BaseService {
 
     getTasks() {

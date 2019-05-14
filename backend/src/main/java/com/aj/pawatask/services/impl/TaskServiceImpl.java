@@ -1,7 +1,7 @@
 package com.aj.pawatask.services.impl;
 
+import com.aj.pawatask.models.Comment;
 import com.aj.pawatask.models.Task;
-import com.aj.pawatask.models.User;
 import com.aj.pawatask.repositories.TaskRepository;
 import com.aj.pawatask.services.TaskService;
 import lombok.extern.java.Log;
@@ -17,9 +17,11 @@ import java.util.Optional;
 @Log
 public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepository;
+    private CommentServiceImpl commentService;
 
-    public TaskServiceImpl(TaskRepository taskRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, CommentServiceImpl commentService) {
         this.taskRepository = taskRepository;
+        this.commentService = commentService;
     }
 
     @Override
@@ -29,15 +31,15 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task saveTask(Task task) {
-        User user = new User();         // TODO: requires real data here
-        user.setName("Aleksei");
-        user.setLastName("Jermatsenkov");
-        user.setId(1L);
+        Task savedTask = taskRepository.save(task);
 
-      //  task.setDueDate(new Date());
-        task.setUser(user);
+        if (task.getComments().size() > 0) {
+            Comment comment = task.getComments().get(0);
+            comment.setTaskId(savedTask.getId());
+            commentService.saveComment(comment);
+        }
 
-        return taskRepository.save(task);
+        return savedTask;
     }
 
     @Override

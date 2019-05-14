@@ -3,9 +3,7 @@ package com.aj.pawatask.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -31,6 +29,7 @@ public class Comment extends AbstractModel {
     @Column(name="task_id")
     private Long taskId;
 
-    @Column(name="user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
 }

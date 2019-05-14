@@ -1,4 +1,5 @@
 import {SET_FORM_TYPE, SET_ITEM, SET_LOADING, TOGGLE_FORM} from "@/store/modules/form/mutation-types";
+import CommentService from '@/services/comment.service';
 
 export default {
     openForm({commit}) {
@@ -19,5 +20,11 @@ export default {
 
     setLoading({commit}, status) {
         commit(SET_LOADING, status);
+    },
+
+    addComment({commit}, comment) {
+        return CommentService.addComment(comment)
+            .then(response => console.log('Comment added!'))
+            .catch(error => console.warn(error.message))
     }
 }

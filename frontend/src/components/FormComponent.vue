@@ -38,7 +38,7 @@
 
                     <div class="input-field">
                         <label for="comments">{{ commentsLabel }}:</label>
-                        <textarea cols="30" rows="10" id="comments" maxlength="500"></textarea>
+                        <textarea cols="30" rows="10" id="comments" maxlength="500" v-model="formData.comment"></textarea>
                     </div>
                 </template>
 
@@ -75,9 +75,9 @@
                 </template>
 
                 <template slot="footer">
-                    <a class="button" @click.prevent="" style="float: right">Add comment</a>
+                    <a class="button" @click.prevent="onAddCommentClick" style="float: right">Add comment</a>
                     <div class="comment-input-wrapper">
-                        <input class="comment-input" type="text" :placeholder="commentPlaceholder" />
+                        <input class="comment-input" type="text" :placeholder="commentPlaceholder" v-model="formData.comment"/>
                     </div>
                 </template>
             </modal-component>
@@ -113,10 +113,8 @@
                 setDateLabel: 'Set due date',
                 taskItem: null,
                 dateFormat: DATE_FORMAT,
-                formDate: {
-                    month: 1,
-                    day: 1,
-                    year: 2018
+                formData: {
+                    comment: ''
                 }
             }
         },
@@ -125,7 +123,8 @@
             ...mapGetters({
                 formType: 'getFormType',
                 formItem: 'getFormItem',
-                isOpened: 'getFormOpenStatus'
+                isOpened: 'getFormOpenStatus',
+                user: 'getUser'
             }),
 
             isRead() {
@@ -138,6 +137,10 @@
 
             isCreate() {
                 return this.formType === FORM_TYPE_CREATE;
+            },
+
+            isEmptyComment() {
+                return this.formData.comment.length === 0;
             }
         },
 
@@ -151,22 +154,46 @@
                 return this.$moment(this.taskItem.dueDate).local().format(format);
             },
 
-            setTaskDate() {
+            getCommentData() {
+                return {
+                    user: this.user,
+                    userName: this.user.name,
+                    userLastname: this.user.lastName,
+                    taskId: this.formItem.id,
+                    comment: this.formData.comment
+                };
+            },
+
+            setTaskData() {
                 let month = this.$refs.month.value;
                 let day =  this.$refs.day.value;
                 let year = this.$refs.year.value;
 
                 let date = this.$moment(year + '-' + month + '-' + day, DB_DATE_FORMAT);
                 this.taskItem.dueDate = date;
+
+                if (!this.isEmptyComment) {
+                    this.taskItem.comments = [this.getCommentData()];
+                }
+
+                this.taskItem.user = this.user;
             },
 
             onOkClick() {
-                this.setTaskDate();
+                this.setTaskData();
                 this.addNewTask(this.taskItem);
+                this.formData.comment = '';
+            },
+
+            onAddCommentClick() {
+                if (this.isEmptyComment) { return; }
+
+                this.addComment(this.getCommentData());
+                this.formData.comment = '';
             },
 
             ...mapActions([
-                'closeForm', 'addNewTask'
+                'closeForm', 'addNewTask', 'addComment'
             ])
         },
 
