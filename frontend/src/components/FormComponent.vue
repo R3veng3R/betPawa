@@ -196,7 +196,6 @@
             onOkClick() {
                 this.setTaskData();
                 this.addNewTask(this.taskDTO);
-                this.formData.comment = '';
             },
 
             onAddCommentClick() {
