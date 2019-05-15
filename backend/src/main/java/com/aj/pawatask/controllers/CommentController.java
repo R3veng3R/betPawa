@@ -2,6 +2,7 @@ package com.aj.pawatask.controllers;
 
 import com.aj.pawatask.models.Comment;
 import com.aj.pawatask.services.impl.CommentServiceImpl;
+import com.aj.pawatask.utils.dto.CommentDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class CommentController {
     }
 
     @PostMapping("")
-    public void addComment(@RequestBody Comment comment) {
-        commentService.saveComment(comment);
+    public void addComment(@RequestBody CommentDTO commentDTO) {
+        commentService.saveComment(commentDTO);
     }
 }

@@ -2,10 +2,16 @@ package com.aj.pawatask.services.impl;
 
 import com.aj.pawatask.models.Comment;
 import com.aj.pawatask.models.Task;
+import com.aj.pawatask.models.User;
+import com.aj.pawatask.repositories.CommentRepository;
 import com.aj.pawatask.repositories.TaskRepository;
 import com.aj.pawatask.services.TaskService;
+import com.aj.pawatask.utils.dto.TaskDTO;
+import com.aj.pawatask.utils.dto.mappers.TaskMapper;
 import lombok.extern.java.Log;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -16,12 +22,15 @@ import java.util.Optional;
 @Transactional
 @Log
 public class TaskServiceImpl implements TaskService {
+    private TaskMapper taskMapper = Mappers.getMapper(TaskMapper.class);
     private TaskRepository taskRepository;
-    private CommentServiceImpl commentService;
+    private CommentRepository commentRepository;
+    private UserServiceImpl userService;
 
-    public TaskServiceImpl(TaskRepository taskRepository, CommentServiceImpl commentService) {
+    public TaskServiceImpl(TaskRepository taskRepository, CommentRepository commentRepository, UserServiceImpl userService) {
         this.taskRepository = taskRepository;
-        this.commentService = commentService;
+        this.commentRepository = commentRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -30,16 +39,23 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task saveTask(Task task) {
-        Task savedTask = taskRepository.save(task);
+    public Task saveTask(TaskDTO taskDTO) {
+        User user = userService.getUserById(taskDTO.getUserId());
 
-        if (task.getComments().size() > 0) {
-            Comment comment = task.getComments().get(0);
-            comment.setTaskId(savedTask.getId());
-            commentService.saveComment(comment);
+        Task task = taskMapper.taskDTOtoTask(taskDTO);
+        task.setId(taskDTO.getId());
+        task.setUser(user);
+        taskRepository.save(task);
+
+        if (!StringUtils.isEmpty(taskDTO.getComment())) {
+            Comment comment = new Comment();
+            comment.setUser(user);
+            comment.setTaskId(task.getId());
+            comment.setComment(taskDTO.getComment());
+            commentRepository.save(comment);
         }
 
-        return savedTask;
+        return task;
     }
 
     @Override

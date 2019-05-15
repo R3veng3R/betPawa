@@ -5,24 +5,24 @@
             <!-- EDIT FORM -->
             <modal-component v-if="isEdit || isCreate" @modalClosed="closeForm">
                 <template slot="header">
-                     {{ taskItem.title }}
+                     {{ taskDTO.title }}
                 </template>
 
                 <template slot="body">
                     <div class="form-container">
                         <div class="input-field">
                             <label for="title">{{ titleLabel }}:</label>
-                            <input class="input" type="text" id="title" v-model="taskItem.title"/>
+                            <input class="input" type="text" id="title" v-model="taskDTO.title"/>
                         </div>
 
                         <div class="input-field">
                             <label for="description">{{ descriptionLabel }}:</label>
-                            <textarea cols="30" rows="10" id="description" v-model="taskItem.description"></textarea>
+                            <textarea cols="30" rows="10" id="description" v-model="taskDTO.description"></textarea>
                         </div>
 
                         <div class="input-field">
                             <label for="priority">{{ priorityLabel }}:</label>
-                            <select class="input custom-select" id="priority" v-model="taskItem.priority">
+                            <select class="input custom-select" id="priority" v-model="taskDTO.priority">
                                 <option v-for="priority in priorityList"
                                         :value="priority.value">
                                     {{ priority.label }}
@@ -43,7 +43,7 @@
                         <div class="input-field">
                             <label for="comments">{{ commentsLabel }}:</label>
                             <textarea cols="30" rows="10" id="comments" maxlength="500"
-                                      v-model="formData.comment"></textarea>
+                                      v-model="taskDTO.comment"></textarea>
                         </div>
                     </div>
                 </template>
@@ -79,7 +79,7 @@
                     <div class="comments-wrapper">
                         <div class="comment" v-for="comment in comments" :key="comment.id">
                             <p>
-                                <span class="name">{{ comment.userName + ' ' + formatLastName(comment.userLastname) }}.</span>
+                                <span class="name">{{ comment.user.name + ' ' + formatLastName(comment.user.lastName) }}.</span>
                                 <span class="create-date">{{ formatDate(comment.createDate) }}</span>
                             </p>
                             <p class="comment-text">
@@ -93,7 +93,7 @@
                     <a class="button" @click.prevent="onAddCommentClick" style="float: right">Add comment</a>
                     <div class="comment-input-wrapper">
                         <input class="comment-input" type="text" :placeholder="commentPlaceholder"
-                               v-model="formData.comment"/>
+                               v-model="taskDTO.comment"/>
                     </div>
                 </template>
             </modal-component>
@@ -107,6 +107,7 @@
         DATE_FORMAT,
         DB_DATE_FORMAT,
         FORM_PRIORITY_LIST,
+        FORM_PRIORITY_MEDIUM,
         FORM_TYPE_CREATE,
         FORM_TYPE_EDIT,
         FORM_TYPE_READ
@@ -128,10 +129,16 @@
                 commentPlaceholder: 'Write a comment...',
                 dateLabel: 'Date',
                 setDateLabel: 'Set due date',
-                taskItem: null,
                 dateFormat: DATE_FORMAT,
-                formData: {
-                    comment: ''
+
+                taskDTO: {
+                    title: '',
+                    description: '',
+                    priority: FORM_PRIORITY_MEDIUM,
+                    comment: '',
+                    dueDate: '',
+                    userId: '',
+                    id: null
                 }
             }
         },
@@ -158,7 +165,7 @@
             },
 
             isEmptyComment() {
-                return this.formData.comment.length === 0;
+                return this.taskDTO.comment.length === 0;
             }
         },
 
@@ -169,17 +176,7 @@
             },
 
             getLocalDate(format) {
-                return this.$moment(this.taskItem.dueDate).local().format(format);
-            },
-
-            getCommentData() {
-                return {
-                    user: this.user,
-                    userName: this.user.name,
-                    userLastname: this.user.lastName,
-                    taskId: this.formItem.id,
-                    comment: this.formData.comment
-                };
+                return this.$moment(this.taskDTO.dueDate).local().format(format);
             },
 
             setTaskData() {
@@ -188,18 +185,17 @@
                 let year = this.$refs.year.value;
 
                 let date = this.$moment(year + '-' + month + '-' + day, DB_DATE_FORMAT);
-                this.taskItem.dueDate = date;
+                this.taskDTO.dueDate = date;
+                this.taskDTO.userId = this.user.id;
 
-                if (!this.isEmptyComment) {
-                    this.taskItem.comments = [this.getCommentData()];
+                if (this.formItem.id) {
+                    this.taskDTO.id = this.formItem.id;
                 }
-
-                this.taskItem.user = this.user;
             },
 
             onOkClick() {
                 this.setTaskData();
-                this.addNewTask(this.taskItem);
+                this.addNewTask(this.taskDTO);
                 this.formData.comment = '';
             },
 
@@ -208,8 +204,14 @@
                     return;
                 }
 
-                this.addComment(this.getCommentData());
-                this.formData.comment = '';
+                let commentDTO = {
+                    userId: this.user.id,
+                    taskId: this.formItem.id,
+                    comment: this.taskDTO.comment
+                };
+
+                this.addComment(commentDTO);
+                this.taskDTO.comment = '';
             },
 
             formatLastName(lastname) {
@@ -223,6 +225,21 @@
                 return result + at;
             },
 
+            resetForm() {
+                this.taskDTO.title = '';
+                this.taskDTO.description = '';
+                this.taskDTO.priority = FORM_PRIORITY_MEDIUM;
+                this.taskDTO.comment = '';
+                this.taskDTO.id = null;
+            },
+
+            setForm() {
+                this.taskDTO.description = this.formItem.description;
+                this.taskDTO.priority = this.formItem.priority;
+                this.taskDTO.dueDate = this.formItem.dueDate;
+                this.taskDTO.title = this.formItem.title;
+            },
+
             ...mapActions([
                 'closeForm', 'addNewTask', 'addComment', 'getTaskComments'
             ])
@@ -232,6 +249,7 @@
             isOpened: function (newValue) {
                 if (newValue === false) {
                     this.$store.commit(SET_TASK_COMMENTS, []);
+                    this.resetForm();
                     return;
                 }
 
@@ -240,9 +258,7 @@
                     return;
                 }
 
-                // WE DON'T WANT REACTIVITY ON ORIGINAL ITEM FROM STORE
-                // JUST IN CASE USER DECIDES TO CANCEL THE PROCESS
-                this.taskItem = JSON.parse(JSON.stringify(this.formItem));
+                this.setForm();
             }
         }
     }

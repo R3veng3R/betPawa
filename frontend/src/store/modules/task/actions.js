@@ -8,8 +8,8 @@ export default {
             .catch(error => console.warn(error.message));
     },
 
-    addNewTask({ dispatch, commit }, task) {
-        return TaskService.addTask(task)
+    addNewTask({ dispatch, commit }, taskDTO) {
+        return TaskService.addTask(taskDTO)
             .then(response => {
                 dispatch('closeForm');
                 dispatch('getTasks');

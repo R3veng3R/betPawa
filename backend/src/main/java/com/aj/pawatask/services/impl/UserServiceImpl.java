@@ -14,7 +14,6 @@ import javax.transaction.Transactional;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
-
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -22,5 +21,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.getOne(id);
     }
 }

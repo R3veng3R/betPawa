@@ -14,12 +14,6 @@ public class Comment extends AbstractModel {
 
     public static final String TABLE_NAME = "comments";
 
-    @Column(name="user_name")
-    private String userName;
-
-    @Column(name="user_lastname")
-    private String userLastname;
-
     @Column(name="comment")
     private String comment;
 

@@ -2,6 +2,7 @@ package com.aj.pawatask.controllers;
 
 import com.aj.pawatask.models.Task;
 import com.aj.pawatask.services.impl.TaskServiceImpl;
+import com.aj.pawatask.utils.dto.TaskDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +21,9 @@ public class TaskController {
         return taskService.getTaskList();
     }
 
-
     @PostMapping()
-    public void createTask(@RequestBody Task task) {
-        taskService.saveTask(task);
+    public void createTask(@RequestBody TaskDTO taskDTO) {
+        taskService.saveTask(taskDTO);
     }
 
     @DeleteMapping("/{id}")

@@ -28,8 +28,8 @@ export default {
         commit(SET_LOADING, status);
     },
 
-    addComment({dispatch, commit}, comment) {
-        return CommentService.addComment(comment)
+    addComment({dispatch, commit}, commentDTO) {
+        return CommentService.addComment(commentDTO)
             .then(data => {
                 dispatch('getTaskComments', data.id);
             })

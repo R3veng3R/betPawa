@@ -16,9 +16,9 @@ class TasksService extends BaseService {
         });
     }
 
-    addTask(task) {
+    addTask(taskDTO) {
         return new Promise( (resolve, reject) => {
-            return this.request().post(TASK_API, task)
+            return this.request().post(TASK_API, taskDTO)
                 .then( response => resolve(response.data))
                 .catch(error => {reject(new ErrorWrapper(error))})
         });

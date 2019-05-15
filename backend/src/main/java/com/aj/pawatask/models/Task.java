@@ -34,7 +34,7 @@ public class Task extends AbstractModel {
     private TaskPriority priority;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "taskId")
