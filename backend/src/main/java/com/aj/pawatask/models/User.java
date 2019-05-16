@@ -23,4 +23,15 @@ public class User extends AbstractModel {
 
     @Column(name = "is_active")
     private boolean isActive;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    public void setActive(boolean status) {
+        this.isActive = status;
+    }
+
+    public boolean getActive() {
+        return this.isActive;
+    }
 }

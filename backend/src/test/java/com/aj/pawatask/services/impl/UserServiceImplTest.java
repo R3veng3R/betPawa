@@ -21,6 +21,8 @@ public class UserServiceImplTest {
         User user = new User();
         user.setLastName("MyLastName");
         user.setName("MyName");
+        user.setActive(true);
+        user.setEmail("myEmail@test.com");
 
         assertNotNull(userService.saveUser(user));
     }
