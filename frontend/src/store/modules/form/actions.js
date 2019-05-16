@@ -30,9 +30,7 @@ export default {
 
     addComment({dispatch, commit}, commentDTO) {
         return CommentService.addComment(commentDTO)
-            .then(data => {
-                dispatch('getTaskComments', data.id);
-            })
+            .then(data => { dispatch('getTaskComments', data.id); })
             .catch(error => console.warn(error.message))
     },
 

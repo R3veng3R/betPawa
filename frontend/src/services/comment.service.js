@@ -3,6 +3,11 @@ import {ErrorWrapper} from "@/util/helpers";
 
 const COMMENT_API = '/api/comments';
 
+/**
+ * We wrap axios Promise into another Promise to get all the errors from server.
+ * pass them to actions and handle them appropriately with console message,
+ * instead of dropping to console with red error.
+ */
 class CommentService extends BaseService {
 
     addComment(comment) {

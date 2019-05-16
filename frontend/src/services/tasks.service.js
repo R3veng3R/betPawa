@@ -10,9 +10,7 @@ class TasksService extends BaseService {
         return new Promise((resolve, reject) => {
             return this.request().get(TASK_LIST_API)
                 .then( response => resolve(response.data))
-                .catch(error => {
-                    reject(new ErrorWrapper(error))
-                });
+                .catch(error => {reject(new ErrorWrapper(error))});
         });
     }
 

@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         log.info("Getting data for email: " + email);
 
-        if (!userRepository.existsByEmail(email)) {
+        if (email == null || !userRepository.existsByEmail(email)) {
             throw new EmailNotFoundExcetion();
         }
 
