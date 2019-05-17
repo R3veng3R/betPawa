@@ -91,17 +91,24 @@
                             return;
                         }
 
-                        this.$cookies.set("user", responseObject)
+                        this.$cookies.set("user", responseObject);
                     });
             },
 
             registerUser(){
                 if (this.isEmptyUserForm()) { return; }
-                this.register(this.userForm);
+                this.register(this.userForm)
+                    .then(responseObject => {
+                        if( responseObject.name !== ERROR_WRAPPER_NAME) {
+                            this.$cookies.set("user", responseObject);
+                        }
+                    });
             },
 
             isEmptyUserForm() {
-                return this.userForm.email.length === 0 || this.userForm.name.length === 0 || this.userForm.lastName.length === 0;
+                return this.userForm.email.length === 0 ||
+                            this.userForm.name.length === 0 ||
+                                this.userForm.lastName.length === 0;
             },
 
             ...mapActions(['setUser', 'auth', 'register'])

@@ -10,14 +10,14 @@ export default class Http {
     init() {
         this.instance.interceptors.request.use(request => {
             store.dispatch('setLoading', true);
-            return request
+            return request;
         }, error => {return Promise.reject(error)});
 
         this.instance.interceptors.response.use(response => {
             store.dispatch('setLoading', false);
-            return response
-        });
+            return response;
+        }), error => {return Promise.reject(error)};
 
-        return this.instance
+        return this.instance;
     }
 }
