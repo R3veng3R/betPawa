@@ -2,26 +2,52 @@
     <div class="login-wrapper">
         <div class="form">
             <h4><i class="fas fa-user"></i> Login:</h4>
-            <input type="email" :class="{error: hasError}" v-model="email" :placeholder="emailPlaceholder"/>
-            <div class="error-block" :class="{error: hasError}"> {{ emailErrorMsg }} </div>
-            <a class="login-button button" @click.prevent="login">{{ loginBtnString }}</a>
+
+            <template v-if="!isRegisterForm">
+                <input type="email" :class="{error: hasError}" v-model="userForm.email" :placeholder="emailPlaceholder"/>
+                <div class="error-block" :class="{error: hasError}"> {{ emailErrorMsg }} </div>
+                <a class="login-button button" @click.prevent="login">{{ loginBtnString }}</a>
+                <a class="register-link" href="#" @click.prevent="goRegisterForm"> Register </a>
+            </template>
+
+            <template v-else>
+                <input type="email" v-model="userForm.email" :placeholder="emailPlaceholder" />
+                <input type="text" v-model="userForm.name" :placeholder="namePlaceholder" />
+                <input type="text" v-model="userForm.lastName" :placeholder="lastNamePlaceholder" />
+
+                <a class="register-button button" @click.prevent="registerUser">{{ registerBtnString }}</a>
+                <a class="register-link" href="#" @click.prevent="goBack"> Go back </a>
+            </template>
         </div>
     </div>
 </template>
 
 <script>
     import {mapActions} from 'vuex';
+    import {ERROR_WRAPPER_NAME} from "@/util/constants";
 
     export default {
         name: "LoginFormComponent",
         data() {
             return {
                 loginBtnString: 'Login',
+                registerBtnString: 'Register',
+
                 emailPlaceholder: 'Email',
+                namePlaceholder: 'Name',
+                lastNamePlaceholder: 'Last Name',
+
                 emailMustNotBeEmpty: 'Email must not be empty',
                 emailErrorMsg: '',
-                email: '',
-                hasError: false
+
+                hasError: false,
+                isRegisterForm: false,
+
+                userForm: {
+                    email: '',
+                    name: '',
+                    lastName: ''
+                }
             }
         },
 
@@ -44,87 +70,45 @@
                 this.emailErrorMsg = message;
             },
 
+            goRegisterForm() {
+                this.isRegisterForm = true;
+            },
+
+            goBack() {
+                this.isRegisterForm = false;
+            },
+
             login() {
-                if(this.email.length === 0) {
+                if(this.userForm.email.length === 0) {
                     this.setErrorMsg(this.emailMustNotBeEmpty);
                     return;
                 }
 
-                this.auth(this.email)
+                this.auth(this.userForm.email)
                     .then( responseObject => {
-                        if( responseObject.name === 'ErrorWrapper') {
+                        if( responseObject.name === ERROR_WRAPPER_NAME) {
                             this.setErrorMsg(responseObject.message);
+                            return;
                         }
 
                         this.$cookies.set("user", responseObject)
                     });
             },
 
-            ...mapActions(['setUser', 'auth'])
+            registerUser(){
+                if (this.isEmptyUserForm()) { return; }
+                this.register(this.userForm);
+            },
+
+            isEmptyUserForm() {
+                return this.userForm.email.length === 0 || this.userForm.name.length === 0 || this.userForm.lastName.length === 0;
+            },
+
+            ...mapActions(['setUser', 'auth', 'register'])
         }
     }
 </script>
 
 <style scoped lang="scss">
-    @import '../scss/variables';
-
-    .login-wrapper {
-        background-color: whitesmoke;
-        width: 320px;
-        min-height: 100px;
-        border-radius: 5px;
-        margin: 50% auto;
-        box-shadow: 0 9px 50px hsla(59, 54%, 82%, 0.31);
-        padding: 15px;
-
-        .form {
-            margin: 0 auto;
-            width: 75%;
-            text-align: center;
-
-            h4 {
-                text-align: left;
-                font-size: 20px;
-                margin: 5px 0px -8px;
-                color: darken(whitesmoke, 30%);
-            }
-
-            input {
-                width: 100%;
-                box-sizing: border-box;
-                border: 1px solid darken(whitesmoke, 10%);
-                border-radius: 5px;
-                padding: 10px 18px;
-                transition: border 0.5s ease-in-out;
-                font-size: 15px;
-                margin-top: 15px;
-
-                &.error {
-                    border: 1px solid red;
-                }
-            }
-
-            .button{
-                width: 100%;
-                text-align: center;
-                font-size: 15px;
-                border-radius: 10px;
-
-                &:hover {
-                    box-shadow: 4px 3px 21px 0px rgba(217,151,178,1);
-                }
-            }
-
-            .error-block {
-                color: red;
-                font-size: 15px;
-                margin-bottom: 10px;
-                visibility: hidden;
-
-                &.error {
-                    visibility: visible;
-                }
-            }
-        }
-    }
+    @import '../scss/login-form';
 </style>

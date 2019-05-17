@@ -9,6 +9,8 @@ export const FORM_PRIORITY_MEDIUM = 'MEDIUM';
 export const DATE_FORMAT = 'DD/MM/YYYY';
 export const DB_DATE_FORMAT = 'YYYY-MM-DD';
 
+export const ERROR_WRAPPER_NAME = 'ErrorWrapper';
+
 export const FORM_PRIORITY_LIST = [
     {value: FORM_PRIORITY_LOW, label: 'Low'},
     {value: FORM_PRIORITY_HIGH, label: 'High'},

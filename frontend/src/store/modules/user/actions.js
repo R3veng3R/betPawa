@@ -16,5 +16,14 @@ export default {
                 return user;
             })
             .catch(error => { return error; } )
+    },
+
+    register({dispatch, commit}, user) {
+        return LoginService.register(user)
+            .then(user => {
+                dispatch('setUser', user );
+                return user;
+            })
+            .catch(error => { return error; } )
     }
 }
