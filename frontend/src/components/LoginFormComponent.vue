@@ -18,7 +18,8 @@
             return {
                 loginBtnString: 'Login',
                 emailPlaceholder: 'Email',
-                emailErrorMsg: 'Must not be empty',
+                emailMustNotBeEmpty: 'Email must not be empty',
+                emailErrorMsg: '',
                 email: '',
                 hasError: false
             }
@@ -38,14 +39,25 @@
                 }
             },
 
+            setErrorMsg(message) {
+                this.hasError = true;
+                this.emailErrorMsg = message;
+            },
+
             login() {
                 if(this.email.length === 0) {
-                    this.hasError = true;
+                    this.setErrorMsg(this.emailMustNotBeEmpty);
                     return;
                 }
 
                 this.auth(this.email)
-                    .then( user => this.$cookies.set("user", user));
+                    .then( responseObject => {
+                        if( responseObject.name === 'ErrorWrapper') {
+                            this.setErrorMsg(responseObject.message);
+                        }
+
+                        this.$cookies.set("user", responseObject)
+                    });
             },
 
             ...mapActions(['setUser', 'auth'])

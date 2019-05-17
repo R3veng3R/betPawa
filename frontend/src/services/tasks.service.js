@@ -1,4 +1,4 @@
-import {ErrorWrapper} from "@/util/helpers";
+import {ErrorWrapper} from "@/util/ErrorWrapper";
 import BaseService from "@/services/base.service";
 
 const TASK_LIST_API = '/api/task/list';

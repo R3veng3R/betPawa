@@ -1,5 +1,5 @@
 import BaseService from "@/services/base.service";
-import {ErrorWrapper} from "@/util/helpers";
+import {ErrorWrapper} from "@/util/ErrorWrapper";
 
 const COMMENT_API = '/api/comments';
 

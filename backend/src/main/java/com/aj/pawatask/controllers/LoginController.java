@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URLDecoder;
-
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
@@ -19,6 +17,10 @@ public class LoginController {
         this.loginService = loginService;
     }
 
+    /*
+     * Default ErrorHandler is located under:
+     * utils/errors/DefaultExceptionHandler
+     */
     @PostMapping()
     public User authenticate(@RequestBody LoginDTO login) {
         return loginService.authenticate(login.getEmail());

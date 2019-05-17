@@ -15,6 +15,6 @@ export default {
                 dispatch('setUser', user );
                 return user;
             })
-            .catch(error => console.warn(error.message))
+            .catch(error => { return error; } )
     }
 }
