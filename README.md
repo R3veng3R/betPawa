@@ -7,7 +7,7 @@
 ### INSTALLING:
 git clone https://github.com/R3veng3R/betPawa.git
 
-#### 1. Setting up DB:
+#### 1. Setup DB:
 1. cd /database.
 2. You will see a diagram and a database script.
 3. Import database.sql to your local MySQL DB.
@@ -18,7 +18,7 @@ git clone https://github.com/R3veng3R/betPawa.git
 5. Make sure DB is accessible and ready to receive requests.
 
 
-#### 2. Setup backed:
+#### 2. Setup backend:
 1. cd /backend
 2. On UNIX system use: ./gradlew bootRun <br>
    On WINDOWS use: gradlew bootRun
