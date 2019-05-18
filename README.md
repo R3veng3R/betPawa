@@ -36,3 +36,11 @@ git clone https://github.com/R3veng3R/betPawa.git
 4. frontend should be accessible under http://localhost:8080/
 
 You are ready to test the project on your local machine.
+
+## Built With
+
+* [SpringBoot](https://projects.spring.io/spring-boot/) - The Framework used
+* [Gradle](https://gradle.org/) - Gradle
+* [Hibernate](https://hibernate.org/) - DB connection
+* [Project Lombok](https://projectlombok.org/) - for getters/setters and log
+* [MapStruct](http://mapstruct.org/) - for mapping DTOs with Entities
