@@ -1,6 +1,5 @@
 /**
  * Represents server error object
- * @param {Object} [error] - axios error object
  */
 export class ErrorWrapper {
     constructor (error) {
@@ -13,6 +12,7 @@ export class ErrorWrapper {
 
     _getErrorMessage (error, status) {
         let message = '';
+
         if (error.response.data && error.response.data.message) {
             return error.response.data.message;
         }

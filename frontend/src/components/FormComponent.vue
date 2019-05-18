@@ -2,7 +2,7 @@
     <div class="form-wrapper">
 
         <template v-if="isOpened">
-            <!-- EDIT FORM -->
+            <!-- ----------------------------- EDIT FORM -------------------------- -->
             <modal-component v-if="isEdit || isCreate" @modalClosed="closeForm">
                 <template slot="header">
                      {{ taskDTO.title }}
@@ -53,7 +53,7 @@
                 </template>
             </modal-component>
 
-            <!-- READ FORM -->
+            <!-- ------------------------------- READ FORM ---------------------------- -->
             <modal-component v-if="isRead" @modalClosed="closeForm">
                 <template slot="header">
                     {{ formItem.title }}

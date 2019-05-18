@@ -8,6 +8,7 @@ describe('FormComponent test suit: ------------------------', () => {
     let store;
     let actions;
     let getters;
+    let wrapper;
 
     beforeEach(() => {
         actions = {
@@ -23,16 +24,20 @@ describe('FormComponent test suit: ------------------------', () => {
         store = new Vuex.Store({            // MOCK STORE
             actions,
             getters
-        })
+        });
+
+        wrapper = shallowMount(FormComponent, {store});
     });
 
     it('should return correct priority text', () => {
-        const wrapper = shallowMount(FormComponent, {store});
-
-        let expected = 'Low';
         let actual = wrapper.vm.getPriorityText(FORM_PRIORITY_LOW);
-
-        expect(actual).toBe(expected);
+        expect(actual).toBe('Low');
     });
 
+    it('should return correct format for last name', () => {
+        let lastName = 'Smith';
+        let actual = wrapper.vm.formatLastName(lastName);
+
+        expect(actual).toBe('S');
+    });
 });

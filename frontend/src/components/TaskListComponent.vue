@@ -1,7 +1,7 @@
 <template>
     <div class="task-list-wrapper">
         <div class="header-block list-block flex-row">
-            <div class="header">{{headerString}}: {{ getUserName() }}</div> <!-- TODO: FIX MOBILE VIEW  (320 x 600) -->
+            <div class="header">{{headerString}}: {{ getUserName() }}</div>
             <a class="button" @click.prevent="addTask">{{addTaskString}}</a>
         </div>
 
