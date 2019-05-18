@@ -2,6 +2,7 @@ package com.aj.pawatask.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -18,6 +19,7 @@ public class Comment extends AbstractModel {
     private String comment;
 
     @Column(name="create_date")
+    @CreationTimestamp
     private Timestamp createDate;
 
     @Column(name="task_id")

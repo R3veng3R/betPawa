@@ -10,6 +10,10 @@ import com.aj.pawatask.utils.dto.TaskDTO;
 import com.aj.pawatask.utils.dto.mappers.TaskMapper;
 import lombok.extern.java.Log;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -20,7 +24,6 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@Log
 public class TaskServiceImpl implements TaskService {
     private TaskMapper taskMapper = Mappers.getMapper(TaskMapper.class);
     private TaskRepository taskRepository;
@@ -36,6 +39,12 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> getTaskList() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public Page<Task> getTaskList(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Task.COLUMN_LIST_SORT).descending());
+        return taskRepository.findAll(pageable);
     }
 
     @Override
@@ -59,9 +68,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task delete(Task task) {
-        taskRepository.deleteById(task.getId());
-        return task;
+    public Task saveTask(Task task) {
+        return taskRepository.save(task);
     }
 
     @Override
@@ -73,5 +81,12 @@ public class TaskServiceImpl implements TaskService {
     public Task getById(Long id) {
         Optional<Task> task = taskRepository.findById(id);
         return task.orElse(null);
+    }
+
+    @Override
+    public void saveAll(List<Task> taskList) {
+        if(taskList.size() > 0) {
+            taskRepository.saveAll(taskList);
+        }
     }
 }

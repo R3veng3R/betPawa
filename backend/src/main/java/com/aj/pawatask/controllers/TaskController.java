@@ -3,6 +3,7 @@ package com.aj.pawatask.controllers;
 import com.aj.pawatask.models.Task;
 import com.aj.pawatask.services.impl.TaskServiceImpl;
 import com.aj.pawatask.utils.dto.TaskDTO;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +17,14 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+//    @GetMapping("/list")
+//    public List<Task> getTaskList() {
+//        return taskService.getTaskList();
+//    }
+
     @GetMapping("/list")
-    public List<Task> getTaskList() {
-        return taskService.getTaskList();
+    public Page<Task> getTaskList(@RequestParam int page, @RequestParam int pageSize) {
+        return taskService.getTaskList(page, pageSize);
     }
 
     @PostMapping()

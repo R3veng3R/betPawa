@@ -17,6 +17,13 @@
         <template v-else>
             <div class="empty-list-block">{{emptyListString}} {{addTaskString}}</div>
         </template>
+
+        <div class="paging">
+            <a class="paging-link" href="#" @click.prevent="setCurrentPage(--pageNum)" v-for="pageNum in maxPages"
+               :class="{active: isActiveLink(pageNum) }">
+                {{ pageNum }}
+            </a>
+        </div>
     </div>
 </template>
 
@@ -33,11 +40,13 @@
             ...mapGetters({
                 taskList: 'getTaskList',
                 isEmptyList: 'isEmptyTaskList',
-                user: 'getUser'
+                user: 'getUser',
+                maxPages: 'getMaxPages',
+                currentPage: 'getCurrentPage'
             })
         },
 
-        beforeMount() {
+        created() {
             this.getTasks();
         },
 
@@ -79,7 +88,18 @@
                 return this.user.name + ' ' + this.user.lastName.charAt(0).toUpperCase() + '.';
             },
 
-            ...mapActions(['openForm', 'setFormType', 'setFormItem', 'getTasks', 'deleteTask'])
+            isActiveLink(pageNum) {
+                return (pageNum - 1) === this.currentPage;
+            },
+
+            ...mapActions([
+                'openForm',
+                'setFormType',
+                'setFormItem',
+                'getTasks',
+                'deleteTask',
+                'setCurrentPage'
+            ])
         }
     }
 </script>
@@ -105,6 +125,7 @@
         .list-block {
             height: 50px;
             box-shadow: 0 1px 0 0 darken($body-bg-color, 10%);
+            cursor: pointer;
         }
 
         .empty-list-block {
@@ -112,6 +133,19 @@
             font-size: 12px;
             font-weight: normal;
             color: dimgray;
+        }
+
+        .paging {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+
+            .paging-link {
+                &.active {
+                    font-size: 15px;
+                    font-weight: bold;
+                }
+            }
         }
     }
 </style>

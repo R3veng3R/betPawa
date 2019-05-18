@@ -65,6 +65,10 @@
     $control-btn-number: 3;
 
     .list-item {
+        &:hover {
+            background-color: darken($body-bg-color, 5%);
+        }
+
         .item-title {
             @extend %text-ellipsis;
             font-size: 15px;

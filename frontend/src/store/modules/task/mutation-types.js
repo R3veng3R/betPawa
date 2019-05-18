@@ -1,1 +1,3 @@
 export const SET_TASK_LIST = 'SET_TASK_LIST';
+export const SET_MAX_PAGES = 'SET_MAX_PAGES';
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';

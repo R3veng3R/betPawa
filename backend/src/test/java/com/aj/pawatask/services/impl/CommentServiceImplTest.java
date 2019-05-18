@@ -6,6 +6,7 @@ import com.aj.pawatask.models.User;
 import com.aj.pawatask.utils.dto.CommentDTO;
 import com.aj.pawatask.utils.dto.TaskDTO;
 import com.aj.pawatask.utils.enums.TaskPriority;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,6 +42,7 @@ public class CommentServiceImplTest {
         testUser = new User();
         testUser.setLastName("myTestUserLastname");
         testUser.setName("myTestUserName");
+        testUser.setEmail("mytest@email.com");
         userService.saveUser(testUser);
 
         TaskDTO taskDTO = new TaskDTO();

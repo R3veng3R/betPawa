@@ -6,9 +6,9 @@ const TASK_API = '/api/task';
 
 class TasksService extends BaseService {
 
-    getTasks() {
+    getTasks(paging) {
         return new Promise((resolve, reject) => {
-            return this.request().get(TASK_LIST_API)
+            return this.request().get(TASK_LIST_API + this._getPagingParameters(paging))
                 .then( response => resolve(response.data))
                 .catch(error => {reject(new ErrorWrapper(error))});
         });
@@ -28,6 +28,11 @@ class TasksService extends BaseService {
                 .then( response => resolve(response.data))
                 .catch(error => {reject(new ErrorWrapper(error))})
         });
+    }
+
+    // PRIVATE METHOD
+    _getPagingParameters(paging) {
+        return '?page=' + paging.page + '&pageSize=' + paging.pageSize;
     }
 }
 
