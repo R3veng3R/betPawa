@@ -13,7 +13,9 @@ export default {
                 commit(SET_MAX_PAGES, data.totalPages);
                 commit(SET_TASK_LIST, {taskList: data.content});
             })
-            .catch(error => console.warn(error.message));
+            .catch(error =>  {
+                console.warn(error.message);
+            });
     },
 
     addNewTask({ dispatch, commit }, taskDTO) {

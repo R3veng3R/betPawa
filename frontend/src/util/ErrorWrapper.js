@@ -8,11 +8,14 @@ export class ErrorWrapper {
         this.success = error.response ? error.response.data.success : false;
         this.status = error.response ? error.response.status : false;
         this.statusMessage = error.response.statusText;
-        this.message = error.response.data ? error.response.data.message : this._getStatusMessage(this.status);
+        this.message = this._getStatusMessage(error, this.status);
     }
 
-    _getStatusMessage (status) {
+    _getStatusMessage (error, status) {
         let message = '';
+        if (error.response.data && error.response.data.message) {
+            return error.response.data.message;
+        }
 
         switch (status) {
             case 400:
