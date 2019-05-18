@@ -34,6 +34,8 @@ git clone https://github.com/R3veng3R/betPawa.git
 2. npm install
 3. npm run dev
 4. frontend should be accessible under http://localhost:8080/
+5. <b>NB</b>: You can also try: <br/> 
+<i>npm run test</i> - for frontend tests, but there are not so many of them
 
 You are ready to test the project on your local machine.
 
