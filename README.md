@@ -1,15 +1,13 @@
-# Getting Started
-
-###REQUIREMENTS:
+### REQUIREMENTS:
 1. Gradle
 2. Node.js / NPM
 3. MySQL 5.7
 
 
-###INSTALLING:
+### INSTALLING:
 git clone https://github.com/R3veng3R/betPawa.git
 
-####1. Setting up DB:
+#### 1. Setting up DB:
 1. cd /database.
 2. You will see a diagram and a database script.
 3. Import database.sql to your local MySQL DB.
@@ -20,7 +18,7 @@ git clone https://github.com/R3veng3R/betPawa.git
 5. Make sure DB is accessible and ready to receive requests.
 
 
-####2. Setup backed:
+#### 2. Setup backed:
 1. cd /backend
 2. On UNIX system use: ./gradlew bootRun <br>
    On WINDOWS use: gradlew bootRun
@@ -31,7 +29,7 @@ git clone https://github.com/R3veng3R/betPawa.git
 3. backend is using 9000 port (you can change it under application.properties)
    
    
-####3. Setup frontend:
+#### 3. Setup frontend:
 1. cd /frontend
 2. npm install
 3. npm run dev
