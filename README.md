@@ -5,7 +5,7 @@
 
 
 ### INSTALLING:
-git clone https://github.com/R3veng3R/betPawa.git
+git clone https://github.com/R3veng3R/betPawa.git<br>
 cd betPawa
 
 #### 1. Setup DB:
