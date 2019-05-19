@@ -9,7 +9,7 @@ git clone https://github.com/R3veng3R/betPawa.git<br>
 cd betPawa
 
 #### 1. Setup DB:
-1. cd /database.
+1. cd database.
 2. You will see a diagram and a database script.
 3. Import database.sql to your local MySQL DB.
 4. Setup DB connection under: <br>
@@ -20,7 +20,7 @@ cd betPawa
 
 
 #### 2. Setup backend:
-1. cd /backend
+1. cd backend
 2. On UNIX system use: ./gradlew bootRun <br>
    On WINDOWS use: gradlew bootRun
    
@@ -31,7 +31,7 @@ cd betPawa
    
    
 #### 3. Setup frontend:
-1. cd /frontend
+1. cd frontend
 2. npm install
 3. npm run dev
 4. frontend should be accessible under http://localhost:8080/
