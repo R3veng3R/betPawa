@@ -1,7 +1,7 @@
 package com.aj.pawatask.services.impl;
 
 import com.aj.pawatask.models.User;
-import com.aj.pawatask.utils.errors.EmailNotFoundExcetion;
+import com.aj.pawatask.utils.errors.EmailNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +38,7 @@ public class LoginServiceImplTest {
         assertEquals(testUser.getId(), user.getId());
     }
 
-    @Test(expected = EmailNotFoundExcetion.class)
+    @Test(expected = EmailNotFoundException.class)
     public void authenticate_should_throw_exception() {
         userService.getUserByEmail("unknown@email.com");
     }

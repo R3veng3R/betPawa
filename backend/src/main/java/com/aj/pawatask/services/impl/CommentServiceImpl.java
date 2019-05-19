@@ -7,8 +7,6 @@ import com.aj.pawatask.services.CommentService;
 import com.aj.pawatask.services.UserService;
 import com.aj.pawatask.utils.dto.CommentDTO;
 import com.aj.pawatask.utils.dto.mappers.CommentMapper;
-import com.aj.pawatask.utils.dto.mappers.TaskMapper;
-import lombok.extern.java.Log;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +16,6 @@ import java.util.List;
 
 @Service
 @Transactional
-@Log
 public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper = Mappers.getMapper(CommentMapper.class);
     private CommentRepository commentRepository;

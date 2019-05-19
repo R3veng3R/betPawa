@@ -3,7 +3,7 @@ package com.aj.pawatask.services.impl;
 import com.aj.pawatask.models.User;
 import com.aj.pawatask.repositories.UserRepository;
 import com.aj.pawatask.services.UserService;
-import com.aj.pawatask.utils.errors.EmailNotFoundExcetion;
+import com.aj.pawatask.utils.errors.EmailNotFoundException;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         log.info("Getting data for email: " + email);
 
         if (email == null || !userRepository.existsByEmail(email)) {
-            throw new EmailNotFoundExcetion();
+            throw new EmailNotFoundException();
         }
 
         return userRepository.findByEmail(email);

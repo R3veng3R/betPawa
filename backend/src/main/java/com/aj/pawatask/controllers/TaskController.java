@@ -6,8 +6,6 @@ import com.aj.pawatask.utils.dto.TaskDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/task")
 public class TaskController {
@@ -16,11 +14,6 @@ public class TaskController {
     public TaskController(TaskServiceImpl taskService) {
         this.taskService = taskService;
     }
-
-//    @GetMapping("/list")
-//    public List<Task> getTaskList() {
-//        return taskService.getTaskList();
-//    }
 
     @GetMapping("/list")
     public Page<Task> getTaskList(@RequestParam int page, @RequestParam int pageSize) {

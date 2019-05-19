@@ -22,7 +22,7 @@ public class LoginController {
 
     /*
      * DEFAULT ERROR HANDLER IS LOCATED UNDER:
-     * utils/errors/DefaultExceptionHandler
+     * utils/errors/DefaultExceptionHandler.class
      */
     @PostMapping()
     public User authenticate(@RequestBody LoginDTO login) {
